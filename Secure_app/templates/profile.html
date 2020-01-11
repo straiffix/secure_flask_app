@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="title">
+  Welcome, {{ name }}!
+</h1>
+
+<div class="row">
+    <div class="column">
+    <div class="box">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="notification is-danger">
+                {{ messages[0] }}
+            </div>
+        {% endif %}
+        {% endwith %}
+        <form method="POST" action="/profile">
+            <div class="field">
+                <label class="label">Message</label>
+                <div class="control">
+                    <textarea name="message" class="textarea"  placeholder="Message"></textarea>
+                </div>
+            </div>
+            <div class="field">
+                <label class="checkbox">
+                    <input name='private' type="checkbox">
+                    Private
+                </label>
+            </div>
+            <button class="button is-block is-info is-large is-fullwidth">Submit</button>
+        </form>
+    </div>
+    
+    </div>
+    <div class="column">
+    <h2>Private notes</h2>
+    {% for note in list_of_private_notes %}
+    <div class="priv_note"><p><strong>{{ note.user }}:  </strong>{{ note.post }}</p></div>
+    {% endfor %}
+    </div>
+    <div class="column">
+    <h2>Public notes</h2>
+    {% for note in list_of_public_notes %}
+    <div class="pub_note"><p><strong>{{ note.user }}:  </strong>{{ note.post }}</p></div>
+    {% endfor %}
+    </div>
+</div>
+{% endblock %}
